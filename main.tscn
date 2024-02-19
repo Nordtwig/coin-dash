@@ -1,14 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://ce54lak6iwnd7"]
+[gd_scene load_steps=11 format=3 uid="uid://ce54lak6iwnd7"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_1w7ax"]
 [ext_resource type="Texture2D" uid="uid://ba3wivd5ticpv" path="res://assets/grass.png" id="1_mve6j"]
 [ext_resource type="PackedScene" uid="uid://bfyxelmne4cl0" path="res://player.tscn" id="1_tbwnq"]
 [ext_resource type="PackedScene" uid="uid://c5vm88gohf8ac" path="res://coin.tscn" id="2_7lgmw"]
+[ext_resource type="PackedScene" uid="uid://cfiqtvsc8kuus" path="res://powerup.tscn" id="3_blyql"]
 [ext_resource type="PackedScene" uid="uid://b7ylpggcrlpjb" path="res://hud.tscn" id="5_cgxx3"]
+[ext_resource type="AudioStream" uid="uid://7fxwfjn7sqm3" path="res://assets/audio/Coin.wav" id="6_umg4e"]
+[ext_resource type="AudioStream" uid="uid://byvxascyluvyo" path="res://assets/audio/Powerup.wav" id="7_6vxow"]
+[ext_resource type="AudioStream" uid="uid://dyvoq88gjw8r5" path="res://assets/audio/Level.wav" id="7_8y5ce"]
+[ext_resource type="AudioStream" uid="uid://cmg8dbt8omkim" path="res://assets/audio/EndSound.wav" id="8_oj2mf"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1w7ax")
 coin_scene = ExtResource("2_7lgmw")
+powerup_scene = ExtResource("3_blyql")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -28,3 +34,18 @@ stretch_mode = 1
 [node name="GameTimer" type="Timer" parent="."]
 
 [node name="HUD" parent="." instance=ExtResource("5_cgxx3")]
+
+[node name="CoinSoundAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_umg4e")
+
+[node name="PowerupSoundAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_6vxow")
+
+[node name="LevelSoundAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_8y5ce")
+
+[node name="EndSoundAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_oj2mf")
+
+[node name="PowerupTimer" type="Timer" parent="."]
+one_shot = true

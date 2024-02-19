@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var coin_scene: PackedScene
+@export var powerup_scene: PackedScene
 @export var play_time: float = 30.0
 
 var level: int = 1
@@ -14,6 +15,7 @@ func _ready() -> void:
     $Player.pickup.connect(_on_player_pickup)
     $Player.hurt.connect(_on_player_hurt)
     $GameTimer.timeout.connect(_on_game_timer_timeout)
+    $PowerupTimer.timeout.connect(_on_powerup_timer_timeout)
     $HUD.start_game.connect(_on_hud_start_game)
     screen_size = get_viewport_rect().size
     $Player.screen_size = screen_size
@@ -41,6 +43,8 @@ func _new_game() -> void:
 
 
 func _spawn_coins() -> void:
+    $PowerupTimer.start()
+    $LevelSoundAudioStreamPlayer.play()
     for i in level + 4:
         var coin_instance = coin_scene.instantiate()
         add_child(coin_instance)
@@ -51,6 +55,7 @@ func _spawn_coins() -> void:
 
 
 func _game_over() -> void:
+    $EndSoundAudioStreamPlayer.play()
     is_playing = false
     $GameTimer.stop()
     get_tree().call_group("coins", "queue_free")
@@ -58,9 +63,16 @@ func _game_over() -> void:
     $Player.die()
 
 
-func _on_player_pickup() -> void:
-    score += 1
-    $HUD.update_score(score)
+func _on_player_pickup(type: String) -> void:
+    match type:
+        "coin":
+            score += 1
+            $HUD.update_score(score)
+            $CoinSoundAudioStreamPlayer.play()
+        "powerup":
+            $PowerupSoundAudioStreamPlayer.play()
+            time_left += 5
+            $HUD.update_timer(time_left)
 
 
 func _on_player_hurt() -> void:
@@ -72,6 +84,13 @@ func _on_game_timer_timeout() -> void:
     $HUD.update_timer(time_left)
     if time_left <= 0:
         _game_over()
+
+
+func _on_powerup_timer_timeout() -> void:
+    var powerup_instance = powerup_scene.instantiate()
+    add_child(powerup_instance)
+    powerup_instance.screen_size = screen_size
+    powerup_instance.position = Vector2(randi_range(0, screen_size.x), randi_range(0, screen_size.y))
 
 
 func _on_hud_start_game() -> void:
