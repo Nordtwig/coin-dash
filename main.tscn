@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ce54lak6iwnd7"]
+[gd_scene load_steps=12 format=3 uid="uid://ce54lak6iwnd7"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_1w7ax"]
 [ext_resource type="Texture2D" uid="uid://ba3wivd5ticpv" path="res://assets/grass.png" id="1_mve6j"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://byvxascyluvyo" path="res://assets/audio/Powerup.wav" id="7_6vxow"]
 [ext_resource type="AudioStream" uid="uid://dyvoq88gjw8r5" path="res://assets/audio/Level.wav" id="7_8y5ce"]
 [ext_resource type="AudioStream" uid="uid://cmg8dbt8omkim" path="res://assets/audio/EndSound.wav" id="8_oj2mf"]
+[ext_resource type="PackedScene" uid="uid://bsmgyxxux65s6" path="res://cactus.tscn" id="11_peeyh"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1w7ax")
@@ -49,3 +50,9 @@ stream = ExtResource("8_oj2mf")
 
 [node name="PowerupTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Cactus" parent="." instance=ExtResource("11_peeyh")]
+position = Vector2(346, 185)
+
+[node name="Cactus2" parent="." instance=ExtResource("11_peeyh")]
+position = Vector2(124, 512)
