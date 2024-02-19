@@ -36,21 +36,21 @@ func _process(delta) -> void:
         animated_sprite.flip_h = velocity.x < 0
 
 
-func _start() -> void:
+func start() -> void:
     set_process(true)
     position = screen_size / 2
     animated_sprite.animation = "idle"
 
 
-func _die() -> void:
+func die() -> void:
     animated_sprite.animation = "hurt"
     set_process(false)
 
 
 func _on_area_entered(area: Area2D) -> void:
-    if area.is_in_group("coins"):
+    if area.is_in_group("coin"):
         area.pickup()
         pickup.emit()
-    if area.is_in_group("obstacles"):
+    if area.is_in_group("obstacle"):
         hurt.emit()
-        _die()
+        die()
