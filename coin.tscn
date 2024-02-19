@@ -64,8 +64,9 @@ script = ExtResource("1_gdcjs")
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_ehr4t")
 animation = &"shine"
-autoplay = "shine"
 frame_progress = 0.797645
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_72t8a")
+
+[node name="Timer" type="Timer" parent="."]
