@@ -48,9 +48,9 @@ func die() -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-    if area.is_in_group("coin"):
+    if area.is_in_group("coins"):
         area.pickup()
         pickup.emit()
-    if area.is_in_group("obstacle"):
+    if area.is_in_group("obstacles"):
         hurt.emit()
         die()

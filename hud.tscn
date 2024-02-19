@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7ylpggcrlpjb"]
+
+[ext_resource type="FontFile" uid="uid://c6o8a88cfnob1" path="res://assets/Kenney Bold.ttf" id="1_a1i5o"]
+[ext_resource type="Script" path="res://hud.gd" id="1_uomic"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_r3550"]
+font = ExtResource("1_a1i5o")
+font_size = 48
+outline_size = 10
+outline_color = Color(0.0235294, 0.0901961, 0.0392157, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jasqh"]
+font = ExtResource("1_a1i5o")
+font_size = 48
+outline_size = 10
+outline_color = Color(0.0235294, 0.0901961, 0.0392157, 1)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_uomic")
+
+[node name="MessageLabel" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Coin Dash!"
+label_settings = SubResource("LabelSettings_r3550")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "0
+"
+label_settings = SubResource("LabelSettings_jasqh")
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_r3550")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_a1i5o")
+theme_override_font_sizes/font_size = 48
+text = "Start"

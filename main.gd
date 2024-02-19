@@ -11,9 +11,20 @@ var is_playing: bool = false
 
 
 func _ready() -> void:
+    $Player.pickup.connect(_on_player_pickup)
+    $Player.hurt.connect(_on_player_hurt)
+    $GameTimer.timeout.connect(_on_game_timer_timeout)
+    $HUD.start_game.connect(_on_hud_start_game)
     screen_size = get_viewport_rect().size
     $Player.screen_size = screen_size
     $Player.hide()
+
+
+func _process(_delta) -> void:
+    if is_playing && get_tree().get_nodes_in_group("coins").size() == 0:
+        level += 1
+        time_left += 5
+        _spawn_coins()
 
 
 func _new_game() -> void:
@@ -24,6 +35,8 @@ func _new_game() -> void:
     $Player.start()
     $Player.show()
     $GameTimer.start()
+    $HUD.update_score(score)
+    $HUD.update_timer(time_left)
     _spawn_coins()
 
 
@@ -35,3 +48,31 @@ func _spawn_coins() -> void:
         coin_instance.position = Vector2(
                 randi_range(0, screen_size.x),
                 randi_range(0, screen_size.y))
+
+
+func _game_over() -> void:
+    is_playing = false
+    $GameTimer.stop()
+    get_tree().call_group("coins", "queue_free")
+    $HUD.show_game_over()
+    $Player.die()
+
+
+func _on_player_pickup() -> void:
+    score += 1
+    $HUD.update_score(score)
+
+
+func _on_player_hurt() -> void:
+    _game_over()
+
+
+func _on_game_timer_timeout() -> void:
+    time_left -= 1
+    $HUD.update_timer(time_left)
+    if time_left <= 0:
+        _game_over()
+
+
+func _on_hud_start_game() -> void:
+    _new_game()
